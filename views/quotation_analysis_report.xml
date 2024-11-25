@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_filter_custom" model="ir.ui.view">
+        <field name="name">pos.order.filter.custom</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='order_date']" position="inside">
+                <filter string="This Week" name="current_week" domain="[('date_order', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))),
+('date_order', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"/>
+                <filter string="Last Week" name="last_week"  domain="[('date_order', '&gt;=', ((context_today()+relativedelta(weeks=-2,days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+        ('date_order', '&lt;=', ((context_today()+relativedelta(weeks=-1,weekday=6)).strftime('%%Y-%%m-%%d')))]"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
